@@ -2,6 +2,7 @@
   "name": "pimcore/payment-provider-payu",
   "license": "GPL-3.0+",
   "type": "pimcore-bundle",
+  "description": "Pimcore Payment Provider - PayU",
   "config": {
     "sort-packages": true
   },
