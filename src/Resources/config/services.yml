@@ -9,3 +9,6 @@ services:
             $options: []
         tags:
             - { name: pimcore_ecommerce.payment.provider, key: 'payu' }
+
+    Pimcore\Bundle\EcommerceFrameworkBundle\PayU\Installer:
+        public: true
