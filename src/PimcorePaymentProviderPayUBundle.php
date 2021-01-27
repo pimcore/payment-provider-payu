@@ -12,11 +12,9 @@
 namespace Pimcore\Bundle\EcommerceFrameworkBundle;
 
 
+use Pimcore\Bundle\EcommerceFrameworkBundle\PayU\Installer;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
-use Pimcore\HttpKernel\Bundle\DependentBundleInterface;
-use Pimcore\HttpKernel\BundleCollection\BundleCollection;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class PimcorePaymentProviderPayUBundle extends AbstractPimcoreBundle
 {
@@ -28,5 +26,11 @@ class PimcorePaymentProviderPayUBundle extends AbstractPimcoreBundle
     protected function getComposerPackageName()
     {
         return 'pimcore/payment-provider-payu';
+    }
+
+
+    public function getInstaller()
+    {
+        return $this->container->get(Installer::class);
     }
 }
