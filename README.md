@@ -39,6 +39,12 @@ pimcore_ecommerce_framework:
                     oauth_client_secret: '0c68dfa4f61b65fa534b48d95e1c9d91'
 ```
 
+Payment Information: Order payment section "Payment Informations" stores information about every payment trial by Customer.
+
+Add additional fields in "PaymentInfo" fieldcollection, so that Order Manager stores information in Order object:
+![PaymentInfo Additional Data](./doc/img/payu_paymentinfo.png)
+
+
 *usage sample* 
 ```php
 <?php
