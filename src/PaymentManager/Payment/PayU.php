@@ -359,7 +359,6 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
         }
     }
 
-
     /**
      * @param PriceInterface $price
      * @param string $reference
