@@ -181,7 +181,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     /**
      * @param array $items
      *
-     * @return array
+     * @return OnlineShopOrderItem[]
      */
     protected function setProducts(array $items): array
     {
