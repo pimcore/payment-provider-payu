@@ -16,6 +16,7 @@
 namespace Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\Payment;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Utils;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrder;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\Currency;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderAgentInterface;
@@ -216,13 +217,14 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
             'client_secret' => $this->oauthClientSecret,
         ]]);
 
-        $response = \GuzzleHttp\json_decode($response->getBody()->getContents());
+        /** @var array $response */
+        $response = Utils::jsonDecode($response->getBody()->getContents(), true);
 
-        if (!isset($response->access_token)) {
-            throw new \Exception($response->error_description . ' check PayU configuration');
+        if (!isset($response['access_token'])) {
+            throw new \Exception($response['error_description'] . ' check PayU configuration');
         }
 
-        return $response->access_token;
+        return $response['access_token'];
     }
 
     /**
@@ -243,13 +245,14 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
             'http_errors' => false,
         ]);
 
-        $response = \GuzzleHttp\json_decode($response->getBody()->getContents());
+        /** @var array $response */
+        $response = Utils::jsonDecode($response->getBody()->getContents(), true);
 
-        if ($response->status->statusCode === 'SUCCESS') {
-            return $response->redirectUri;
+        if ($response['status']['statusCode'] === 'SUCCESS') {
+            return $response['redirectUri'];
         }
 
-        throw new \Exception($response->error_description);
+        throw new \Exception($response['error_description']);
     }
 
     /**
@@ -265,7 +268,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     /**
      * Executes payment
      *
-     * @param mixed $response
+     * @param array|StatusInterface $response
      *
      * @return StatusInterface
      *
@@ -304,7 +307,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
 
         $price = new Price(Decimal::create($response['totalAmount']), new Currency($response['currencyCode']));
 
-        return $this->executeDebit($price, $response);
+        return $this->executeDebit($price, Utils::jsonEncode($response));
     }
 
     /**
@@ -324,10 +327,16 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     }
 
     /**
-     * @inheritdoc
+     * @param PriceInterface|null $price
+     * @param string|null $response
+     *
+     * @return Status
      */
     public function executeDebit(PriceInterface $price = null, $response = null)
     {
+        if ($response) {
+            $response = Utils::jsonDecode($response, true);
+        }
         /** @var OnlineShopOrder $order */
         $order = $response['order'];
 
@@ -337,11 +346,11 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
             return new Status(
                 $response['extOrderId'],
                 $response['orderId'],
-                null,
+                '',
                 AbstractOrder::ORDER_STATE_COMMITTED,
                 [
                     'payu_PaymentType' => $response['payMethod']['type'],
-                    'payu_amount' => (string) $price,
+                    'payu_amount' => (string) $price->getAmount(),
                 ]
             );
         } else {
@@ -355,7 +364,13 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     }
 
     /**
-     * @inheritdoc
+     * @param PriceInterface $price
+     * @param string $reference
+     * @param string $transactionId
+     *
+     * @return StatusInterface|void remove `void` after TODO is done
+     *
+     * @throws \Exception
      */
     public function executeCredit(PriceInterface $price, $reference, $transactionId)
     {
