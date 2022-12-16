@@ -306,7 +306,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
 
         $price = new Price(Decimal::create($response['totalAmount']), new Currency($response['currencyCode']));
 
-        return $this->executeDebit($price, $response);
+        return $this->executeDebit($price, json_encode($response));
     }
 
     /**
@@ -333,6 +333,9 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
      */
     public function executeDebit(PriceInterface $price = null, $response = null)
     {
+        if ($response) {
+            $response = json_decode($response, true);
+        }
         /** @var OnlineShopOrder $order */
         $order = $response['order'];
 
@@ -346,7 +349,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
                 AbstractOrder::ORDER_STATE_COMMITTED,
                 [
                     'payu_PaymentType' => $response['payMethod']['type'],
-                    'payu_amount' => (string) $price,
+                    'payu_amount' => (string) $price->getAmount(),
                 ]
             );
         } else {
