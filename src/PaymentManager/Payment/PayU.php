@@ -121,10 +121,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
         return $resolver;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return 'PayU';
     }
@@ -268,13 +265,9 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     /**
      * Executes payment
      *
-     * @param array|StatusInterface $response
-     *
-     * @return StatusInterface
-     *
      * @throws \Exception
      */
-    public function handleResponse($response)
+    public function handleResponse(StatusInterface|array $response): StatusInterface
     {
         // check required fields
         $required = [
@@ -310,10 +303,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
         return $this->executeDebit($price, Utils::jsonEncode($response));
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAuthorizedData()
+    public function getAuthorizedData(): array
     {
         return $this->authorizedData;
     }
@@ -326,13 +316,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
         $this->authorizedData = $authorizedData;
     }
 
-    /**
-     * @param PriceInterface|null $price
-     * @param string|null $response
-     *
-     * @return Status
-     */
-    public function executeDebit(PriceInterface $price = null, $response = null)
+    public function executeDebit(?PriceInterface $price = null, ?string $response = null): StatusInterface
     {
         if ($response) {
             $response = Utils::jsonDecode($response, true);
@@ -372,7 +356,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
      *
      * @throws \Exception
      */
-    public function executeCredit(PriceInterface $price, $reference, $transactionId)
+    public function executeCredit(PriceInterface $price, string $reference, string $transactionId): StatusInterface
     {
         // TODO: Implement executeCredit() method.
         throw new \Exception('not implemented');
