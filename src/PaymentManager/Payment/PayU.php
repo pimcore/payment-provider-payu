@@ -175,11 +175,6 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
         return $this->create($orderData);
     }
 
-    /**
-     * @param array $items
-     *
-     * @return OnlineShopOrderItem[]
-     */
     protected function setProducts(array $items): array
     {
         $products = [];
@@ -348,12 +343,6 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     }
 
     /**
-     * @param PriceInterface $price
-     * @param string $reference
-     * @param string $transactionId
-     *
-     * @return StatusInterface|void remove `void` after TODO is done
-     *
      * @throws \Exception
      */
     public function executeCredit(PriceInterface $price, string $reference, string $transactionId): StatusInterface
