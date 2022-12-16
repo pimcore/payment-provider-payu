@@ -31,6 +31,9 @@ class PimcorePaymentProviderPayUBundle extends AbstractPimcoreBundle
         return 'pimcore/payment-provider-payu';
     }
 
+    /**
+     * @return Installer|null
+     */
     public function getInstaller()
     {
         return $this->container->get(Installer::class);
