@@ -30,6 +30,7 @@ use Pimcore\Bundle\EcommerceFrameworkBundle\Type\Decimal;
 use Pimcore\Model\DataObject\OnlineShopOrder;
 use Pimcore\Model\DataObject\OnlineShopOrderItem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use GuzzleHttp\Utils;
 
 class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\V7\Payment\PaymentInterface
 {
@@ -217,13 +218,13 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
         ]]);
 
         /** @var array $response */
-        $response = \GuzzleHttp\json_decode($response->getBody()->getContents());
+        $response = Utils::jsonDecode($response->getBody()->getContents(), true);
 
-        if (!isset($response->access_token)) {
-            throw new \Exception($response->error_description . ' check PayU configuration');
+        if (!isset($response['access_token'])) {
+            throw new \Exception($response['error_description'] . ' check PayU configuration');
         }
 
-        return $response->access_token;
+        return $response['access_token'];
     }
 
     /**
@@ -245,13 +246,13 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
         ]);
 
         /** @var array $response */
-        $response = \GuzzleHttp\json_decode($response->getBody()->getContents());
+        $response = Utils::jsonDecode($response->getBody()->getContents(), true);
 
-        if ($response->status->statusCode === 'SUCCESS') {
-            return $response->redirectUri;
+        if ($response['status']['statusCode'] === 'SUCCESS') {
+            return $response['redirectUri'];
         }
 
-        throw new \Exception($response->error_description);
+        throw new \Exception($response['error_description']);
     }
 
     /**
@@ -306,7 +307,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
 
         $price = new Price(Decimal::create($response['totalAmount']), new Currency($response['currencyCode']));
 
-        return $this->executeDebit($price, json_encode($response));
+        return $this->executeDebit($price, Utils::jsonEncode($response));
     }
 
     /**
@@ -334,7 +335,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     public function executeDebit(PriceInterface $price = null, $response = null)
     {
         if ($response) {
-            $response = json_decode($response, true);
+            $response = Utils::jsonDecode($response, true);
         }
         /** @var OnlineShopOrder $order */
         $order = $response['order'];
