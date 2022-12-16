@@ -5,6 +5,6 @@ parameters:
 			count: 7
 			path: src/PaymentManager/Payment/PayU.php
 		-
-			message: "#^PHPDoc tag @var for variable \$[a-zA-Z]+ contains unknown class Pimcore\\[a-zA-Z\\]+\\.$#"
+			message: "#^PHPDoc tag @var for variable \$[a-zA-Z]+ contains unknown class Pimcore\\\\[a-zA-Z\\\\]+\\.$#"
 			count: 4
 			path: src/PaymentManager/Payment/PayU.php
