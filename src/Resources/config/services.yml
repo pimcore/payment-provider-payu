@@ -4,11 +4,11 @@ services:
         autowire: true
         autoconfigure: true
 
-    Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\Payment\PayU:
+    Pimcore\Bundle\PimcorePaymentProviderPayUBundle\PaymentManager\Payment\PayU:
         arguments:
             $options: []
         tags:
             - { name: pimcore_ecommerce.payment.provider, key: 'payu' }
 
-    Pimcore\Bundle\EcommerceFrameworkBundle\PayU\Installer:
+    Pimcore\Bundle\PimcorePaymentProviderPayUBundle\PayU\Installer:
         public: true

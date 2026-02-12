@@ -13,11 +13,14 @@
  *  @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
-namespace Pimcore\Bundle\EcommerceFrameworkBundle;
+namespace Pimcore\Bundle\PimcorePaymentProviderPayUBundle;
 
-use Pimcore\Bundle\EcommerceFrameworkBundle\PayU\Installer;
+use Pimcore\Bundle\PimcorePaymentProviderPayUBundle\DependencyInjection\PimcorePaymentProviderPayUExtension;
+use Pimcore\Bundle\PimcorePaymentProviderPayUBundle\PayU\Installer;
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
+use Pimcore\Extension\Bundle\Installer\InstallerInterface;
 use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 class PimcorePaymentProviderPayUBundle extends AbstractPimcoreBundle
 {
@@ -31,8 +34,13 @@ class PimcorePaymentProviderPayUBundle extends AbstractPimcoreBundle
         return 'pimcore/payment-provider-payu';
     }
 
-    public function getInstaller(): Installer
+    public function getInstaller(): ?InstallerInterface
     {
         return $this->container->get(Installer::class);
+    }
+
+    public function getContainerExtension(): ?ExtensionInterface
+    {
+        return new PimcorePaymentProviderPayUExtension();
     }
 }

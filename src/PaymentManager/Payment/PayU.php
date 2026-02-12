@@ -9,19 +9,22 @@
  * Full copyright and license information is available in
  * LICENSE.md which is distributed with this source code.
  *
+/**
  *  @copyright  Copyright (c) Pimcore GmbH (http://www.pimcore.org)
  *  @license    http://www.pimcore.org/license     GPLv3 and PCL
  */
 
-namespace Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\Payment;
+namespace Pimcore\Bundle\PimcorePaymentProviderPayUBundle\PaymentManager\Payment;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Utils;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\AbstractOrder;
 use Pimcore\Bundle\EcommerceFrameworkBundle\Model\Currency;
 use Pimcore\Bundle\EcommerceFrameworkBundle\OrderManager\OrderAgentInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\Payment\AbstractPayment;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\Status;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\StatusInterface;
+use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\V7\Payment\PaymentInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\V7\Payment\StartPaymentRequest\AbstractRequest;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\V7\Payment\StartPaymentResponse\StartPaymentResponseInterface;
 use Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\V7\Payment\StartPaymentResponse\UrlResponse;
@@ -32,7 +35,7 @@ use Pimcore\Model\DataObject\OnlineShopOrder;
 use Pimcore\Model\DataObject\OnlineShopOrderItem;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFrameworkBundle\PaymentManager\V7\Payment\PaymentInterface
+class PayU extends AbstractPayment implements PaymentInterface
 {
     const ORDER_URL = 'https://secure%s.payu.com/api/v2_1/orders';
     const AUTHORIZE_URL = 'https://secure%s.payu.com/pl/standard/user/oauth/authorize';
@@ -78,7 +81,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
      *
      * @throws \Exception
      */
-    protected function processOptions(array $options)
+    protected function processOptions(array $options): void
     {
         $urlPart = $options['mode'] == 'sandbox' ? '.snd' : '';
 
@@ -306,15 +309,15 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     /**
      * @inheritdoc
      */
-    public function setAuthorizedData(array $authorizedData)
+    public function setAuthorizedData(array $authorizedData): void
     {
         $this->authorizedData = $authorizedData;
     }
 
-    public function executeDebit(?PriceInterface $price = null, ?string $response = null): StatusInterface
+    public function executeDebit(?PriceInterface $price = null, ?string $reference = null): StatusInterface
     {
-        if ($response) {
-            $response = Utils::jsonDecode($response, true);
+        if ($reference) {
+            $response = Utils::jsonDecode($reference, true);
         }
         /** @var OnlineShopOrder $order */
         $order = $response['order'];
