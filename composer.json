@@ -9,6 +9,7 @@
   "prefer-stable": true,
   "minimum-stability": "dev",
   "require": {
+    "pimcore/ecommerce-framework": "^5.0",
     "pimcore/pimcore": "^11.0"
   },
   "require-dev": {
@@ -16,13 +17,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Pimcore\\Bundle\\EcommerceFrameworkBundle\\": "src/"
+      "Pimcore\\Bundle\\PimcorePaymentProviderPayUBundle\\": "src/"
     }
   },
   "extra": {
     "pimcore": {
       "bundles": [
-        "Pimcore\\Bundle\\EcommerceFrameworkBundle\\PimcorePaymentProviderPayUBundle"
+        "Pimcore\\Bundle\\PimcorePaymentProviderPayUBundle\\PimcorePaymentProviderPayUBundle"
       ]
     }
   }
