@@ -315,9 +315,16 @@ class PayU extends AbstractPayment implements PaymentInterface
 
     public function executeDebit(?PriceInterface $price = null, ?string $reference = null): StatusInterface
     {
-        if ($reference) {
-            $response = Utils::jsonDecode($reference, true);
+        if (!$reference) {
+            throw new \InvalidArgumentException('Reference is required.');
         }
+
+        $response = Utils::jsonDecode($reference, true);
+
+        if (!is_array($response) || !isset($response['order'], $response['status'], $response['extOrderId'], $response['orderId'])) {
+            throw new \RuntimeException('Invalid payment response payload.');
+        }
+
         /** @var OnlineShopOrder $order */
         $order = $response['order'];
 
