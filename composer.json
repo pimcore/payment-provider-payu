@@ -9,7 +9,7 @@
   "prefer-stable": true,
   "minimum-stability": "dev",
   "require": {
-    "pimcore/ecommerce-framework": "^5.0",
+    "pimcore/ecommerce-framework-bundle": "^1.0",
     "pimcore/pimcore": "^11.0"
   },
   "require-dev": {
