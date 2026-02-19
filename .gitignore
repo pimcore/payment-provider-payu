@@ -13,5 +13,5 @@ composer.lock
 nbproject
 
 # PHP-CS-Fixer
-/.php_cs
-/.php_cs.cache
+.php_cs
+.php_cs.cache
