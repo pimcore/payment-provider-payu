@@ -1,6 +1,6 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Support Portal
+  - name: Support Portal (Private Issues)
     url: https://get.support.pimcore.com/
     about: Private channel to report bugs. Issues and issue details are only shared between you and Pimcore and are not visible to other users. This does not include prioritization or additional support.
   - name: Platform Repository (Public Issues)
