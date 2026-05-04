@@ -1,0 +1,16 @@
+name: Issue creation disabled
+description: New issues are not accepted in this repository
+title: "[DO NOT USE] Issue creation is disabled"
+labels: ["invalid"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        🚫 **Issue creation is disabled for this repository.**
+        Existing issues remain available for reference, but new ones are not accepted.
+        👉 Please use the appropriate channel instead:
+        - [Platform Repository] (https://github.com/pimcore/platform-version/issues)
+        - [Support Portal](https://get.support.pimcore.com/)
+        - [GitHub Discussions](https://github.com/orgs/pimcore/discussions)
+        **Any issue created here will be automatically closed.**
