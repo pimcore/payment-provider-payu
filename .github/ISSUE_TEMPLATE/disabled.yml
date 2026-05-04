@@ -14,3 +14,12 @@ body:
         - [Support Portal](https://get.support.pimcore.com/)
         - [GitHub Discussions](https://github.com/orgs/pimcore/discussions)
         **Any issue created here will be automatically closed.**
+
+  - type: textarea
+    id: acknowledgement
+    attributes:
+      label: Acknowledgement
+      description: Confirm that you understand issues are disabled
+      placeholder: I understand that this issue will be closed.
+    validations:
+      required: true
