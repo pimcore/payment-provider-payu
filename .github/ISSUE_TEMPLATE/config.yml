@@ -9,7 +9,4 @@ contact_links:
   - name: Community Support (Discussions)
     url: https://github.com/pimcore/pimcore/discussions
     about: For questions, ideas, and general discussions. This is the preferred place for community-driven support and knowledge exchange.
-  - name: Report a security vulnerability
-    url: https://github.com/pimcore/platform-version/security/advisories
-    about: Please review our security policy for more details.
     
