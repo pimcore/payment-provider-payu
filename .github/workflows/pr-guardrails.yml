@@ -1,8 +1,8 @@
 name: PR Guardrails
 
-# Thin, generic trigger. All guardrail logic lives in (and is hidden by) the
-# central repo pimcore/workflows-centralized. This file names no guardrails and
-# no secrets (secrets: inherit), so it is identical across every repo and never
+# Thin, generic trigger. All guardrail logic lives in the central collection
+# pimcore/workflows-collection-public. This file names no guardrails and no
+# secrets (secrets: inherit), so it is identical across every repo and never
 # needs editing when a guardrail or token is added/removed there.
 
 on:
@@ -22,6 +22,6 @@ concurrency:
 jobs:
   guardrails:
     # During testing this points at the test branch (@feature/pr-guardrails);
-    # flip to @master (or a @vX tag) once the central pipeline is validated.
-    uses: pimcore/workflows-centralized/.github/workflows/parent-pr-guardrails.yml@feature/pr-guardrails
+    # flip to @main (or a @vX tag) once the central pipeline is validated.
+    uses: pimcore/workflows-collection-public/.github/workflows/parent-pr-guardrails.yml@feature/pr-guardrails
     secrets: inherit
