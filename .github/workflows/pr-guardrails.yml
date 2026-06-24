@@ -23,5 +23,5 @@ jobs:
   guardrails:
     # During testing this points at the test branch (@feature/pr-guardrails);
     # flip to @main (or a @vX tag) once the central pipeline is validated.
-    uses: pimcore/workflows-collection-public/.github/workflows/parent-pr-guardrails.yml@feature/pr-guardrails
+    uses: pimcore/workflows-collection-public/.github/workflows/parent-pr-guardrails.yml@main
     secrets: inherit
