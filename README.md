@@ -10,6 +10,8 @@ Install latest version with composer:
 composer require pimcore/payment-provider-payu
 ```
 
+
+
 Enable bundle via console or extensions manager in Pimcore backend:
 ```bash
 php bin/console pimcore:bundle:enable PimcorePaymentProviderPayUBundle
