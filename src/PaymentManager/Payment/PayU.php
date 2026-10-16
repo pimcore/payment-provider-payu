@@ -78,7 +78,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
      *
      * @throws \Exception
      */
-    protected function processOptions(array $options)
+    protected function processOptions(array $options): void
     {
         $urlPart = $options['mode'] == 'sandbox' ? '.snd' : '';
 
@@ -306,7 +306,7 @@ class PayU extends AbstractPayment implements \Pimcore\Bundle\EcommerceFramework
     /**
      * @inheritdoc
      */
-    public function setAuthorizedData(array $authorizedData)
+    public function setAuthorizedData(array $authorizedData): void
     {
         $this->authorizedData = $authorizedData;
     }

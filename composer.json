@@ -4,11 +4,17 @@
   "type": "pimcore-bundle",
   "description": "Pimcore Payment Provider - PayU",
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "policy": {
+      "advisories": {
+        "block": false
+      }
+    }
   },
   "prefer-stable": true,
   "minimum-stability": "dev",
   "require": {
+    "pimcore/ecommerce-framework-bundle": "^1.0",
     "pimcore/pimcore": "^11.0"
   },
   "require-dev": {
